@@ -52,6 +52,8 @@ const Main = () => {
   return (
     <div className='main'>
       <h1>diditos</h1>
+      {/* <p style={{ position: 'relative', top: '145px', right: '15px', fontSize: '3rem', fontWeight: '300' }}>D</p>
+      <p style={{ fontSize: '3rem', fontWeight: '300' }}>T</p> */}
       <div className='input-item'>
         <input
           className='input input-todo'
