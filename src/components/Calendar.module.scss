@@ -1,0 +1,43 @@
+.calendar {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.calendarHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  place-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .monthChangeButton {
+    margin: 1rem;
+    background-color: white;
+    border: none;
+  }
+  .yearAndMonth {
+    font-size: 2rem;
+  }
+}
+.calendarTable {
+  width: 100%;
+  .weekdayHeader {
+    font-size: 1.2rem;
+  }
+  .weekdayNames {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-content: space-between;
+  }
+  .date {
+    padding: 0;
+    height: 44px;
+    // display: grid;
+    // place-items: center;
+  }
+  .selected {
+    background-color: lightgray;
+    border-radius: 10%;
+    transition: background-color 0.3s ease-out;
+  }
+}
