@@ -5,10 +5,10 @@ import styles from './Calendar.module.scss';
 const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
 const todos = [
-  { id: 1, value: '집에 가자마자 가방 세탁 맡기기' },
-  { id: 2, value: '가방 세탁 맡기기 집에 가자마자' },
-  { id: 3, value: '가자마자 집에 가방 세탁 맡기기' },
-  { id: 4, value: '세탁기 집에 가자마자 돌리기' },
+  { id: 1, item: '집에 가자마자 가방 세탁 맡기기' },
+  { id: 2, item: '가방 세탁 맡기기 집에 가자마자' },
+  { id: 3, item: '가자마자 집에 가방 세탁 맡기기' },
+  { id: 4, item: '세탁기 집에 가자마자 돌리기' },
 ];
 
 const Calendar = () => {
@@ -17,6 +17,7 @@ const Calendar = () => {
   const [month, setMonth] = useState(currentDate.getMonth());
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [showTodo, setShowTodo] = useState(false);
+  const [diditList, setDiditList] = useState([]);
 
   const daysCount = daysInMonth(year, month);
   const startDay = new Date(year, month, 1).getDay();
@@ -40,6 +41,17 @@ const Calendar = () => {
   const handleClickDate = (dayNumber) => {
     setSelectedDate(dayNumber);
     setShowTodo(true);
+  };
+
+  const handleItemClick = (index) => {
+    if (!diditList.includes(index)) {
+      setDiditList([...diditList, index]);
+    } else {
+      const list = diditList.filter((el) => {
+        return el !== index;
+      });
+      setDiditList(list);
+    }
   };
 
   return (
@@ -92,15 +104,17 @@ const Calendar = () => {
           </tbody>
         </table>
       </div>
-      <div>
+      <div className={styles.todoList}>
         {showTodo &&
-          todos.map((todo) => {
-            return (
-              <h4 key={todo.id}>
-                {todo.id}. {todo.value}
-              </h4>
-            );
-          })}
+          todos.map((todo) => (
+            <span
+              key={todo.id}
+              className={`${styles.todoItem} ${diditList.includes(todo.id) ? styles.itemSelected : ''}`}
+              onClick={() => handleItemClick(todo.id)}
+            >
+              {todo.id + 1}. {todo.item}
+            </span>
+          ))}
       </div>
     </div>
   );

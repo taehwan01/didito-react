@@ -60,3 +60,16 @@
     transition: background-color 0.3s ease-out;
   }
 }
+.todoList {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
+  .todoItem {
+    margin-bottom: 1rem;
+  }
+  .itemSelected {
+    text-decoration: line-through;
+  }
+}
