@@ -48,7 +48,7 @@ const Main = () => {
       setDiditList(list);
     }
   };
-
+  // 반응형 웹 미디어쿼리 해상도 분기점: ~480, 481~768, 769~1279, 1280~1920, 1920~
   return (
     <div className='main'>
       <h1>diditos</h1>
