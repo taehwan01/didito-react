@@ -5,17 +5,17 @@ import styles from './Calendar.module.scss';
 const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
 const todos = [
-  { id: 1, item: '집에 가자마자 가방 세탁 맡기기' },
-  { id: 2, item: '가방 세탁 맡기기 집에 가자마자' },
-  { id: 3, item: '가자마자 집에 가방 세탁 맡기기' },
-  { id: 4, item: '세탁기 집에 가자마자 돌리기' },
+  { id: 1, item: '집에 가자마자 가방 세탁 맡기기', date: '2023-08-15' },
+  { id: 2, item: '가방 세탁 맡기기 집에 가자마자', date: '2023-08-16' },
+  { id: 3, item: '가자마자 집에 가방 세탁 맡기기', date: '2023-08-17' },
+  { id: 4, item: '세탁기 집에 가자마자 돌리기', date: '2023-08-18' },
 ];
 
 const Calendar = () => {
   const currentDate = new Date();
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth());
-  const [selectedDate, setSelectedDate] = useState(new Date().getDate());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [showTodo, setShowTodo] = useState(false);
   const [diditList, setDiditList] = useState([]);
 
@@ -40,7 +40,20 @@ const Calendar = () => {
 
   const handleClickDate = (dayNumber) => {
     setSelectedDate(dayNumber);
-    setShowTodo(true);
+    const clickedDate = new Date(year, month, dayNumber);
+    setSelectedDate(clickedDate);
+
+    // todos 배열에서 클릭한 날짜와 일치하는 아이템을 찾음
+    const matchingTodo = todos.find((todo) => {
+      return new Date(todo.date).toDateString() === clickedDate.toDateString();
+    });
+
+    // 일치하는 아이템이 있을 경우 showTodo를 true로 설정
+    if (matchingTodo) {
+      setShowTodo(true);
+    } else {
+      setShowTodo(false);
+    }
   };
 
   const handleItemClick = (index) => {
@@ -86,11 +99,15 @@ const Calendar = () => {
                 {Array.from({ length: 7 }, (_, dayIndex) => {
                   const dayNumber = weekIndex * 7 + dayIndex - startDay + 1;
                   const isCurrentMonth = dayNumber > 0 && dayNumber <= daysCount;
-
+                  const dateToCompare = new Date(year, month, dayNumber);
                   return (
                     <th
                       className={`${styles.date} ${
-                        isCurrentMonth && dayNumber === selectedDate ? styles.selected : ''
+                        dateToCompare.getFullYear() === selectedDate.getFullYear() &&
+                        dateToCompare.getMonth() === selectedDate.getMonth() &&
+                        dateToCompare.getDate() === selectedDate.getDate()
+                          ? styles.selected
+                          : ''
                       }`}
                       key={dayIndex}
                       onClick={() => handleClickDate(dayNumber)}
@@ -104,9 +121,9 @@ const Calendar = () => {
           </tbody>
         </table>
       </div>
-      <div className={styles.todoList}>
-        {showTodo &&
-          todos.map((todo) => (
+      {showTodo && (
+        <div className={styles.todoList}>
+          {todos.map((todo) => (
             <span
               key={todo.id}
               className={`${styles.todoItem} ${diditList.includes(todo.id) ? styles.itemSelected : ''}`}
@@ -115,7 +132,8 @@ const Calendar = () => {
               {todo.id + 1}. {todo.item}
             </span>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
