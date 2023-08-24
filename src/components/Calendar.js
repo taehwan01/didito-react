@@ -14,40 +14,40 @@ const todoList = [
   {
     id: 1,
     items: [
-      '1집에 가자마자 가방 세탁 맡기기',
-      '1가방 세탁 맡기기 집에 가자마자',
-      '1가자마자 집에 가방 세탁 맡기기',
-      '1세탁기 집에 가자마자 돌리기',
+      { id: 1, item: '1집에 가자마자 가방 세탁 맡기기' },
+      { id: 2, item: '1가방 세탁 맡기기 집에 가자마자' },
+      { id: 3, item: '1가자마자 집에 가방 세탁 맡기기' },
+      { id: 4, item: '1세탁기 집에 가자마자 돌리기' },
     ],
     date: '2023-08-15',
   },
   {
     id: 2,
     items: [
-      '2집에 가자마자 가방 세탁 맡기기',
-      '2가방 세탁 맡기기 집에 가자마자',
-      '2가자마자 집에 가방 세탁 맡기기',
-      '2세탁기 집에 가자마자 돌리기',
+      { id: 1, item: '2집에 가자마자 가방 세탁 맡기기' },
+      { id: 2, item: '2가방 세탁 맡기기 집에 가자마자' },
+      { id: 3, item: '2가자마자 집에 가방 세탁 맡기기' },
+      { id: 4, item: '2세탁기 집에 가자마자 돌리기' },
     ],
     date: '2023-08-16',
   },
   {
     id: 3,
     items: [
-      '3집에 가자마자 가방 세탁 맡기기',
-      '3가방 세탁 맡기기 집에 가자마자',
-      '3가자마자 집에 가방 세탁 맡기기',
-      '3세탁기 집에 가자마자 돌리기',
+      { id: 1, item: '3집에 가자마자 가방 세탁 맡기기' },
+      { id: 2, item: '3가방 세탁 맡기기 집에 가자마자' },
+      { id: 3, item: '3가자마자 집에 가방 세탁 맡기기' },
+      { id: 4, item: '3세탁기 집에 가자마자 돌리기' },
     ],
     date: '2023-08-17',
   },
   {
     id: 4,
     items: [
-      '4집에 가자마자 가방 세탁 맡기기',
-      '4가방 세탁 맡기기 집에 가자마자',
-      '4가자마자 집에 가방 세탁 맡기기',
-      '4세탁기 집에 가자마자 돌리기',
+      { id: 1, item: '4집에 가자마자 가방 세탁 맡기기' },
+      { id: 2, item: '4가방 세탁 맡기기 집에 가자마자' },
+      { id: 3, item: '4가자마자 집에 가방 세탁 맡기기' },
+      { id: 4, item: '4세탁기 집에 가자마자 돌리기' },
     ],
     date: '2023-08-18',
   },
@@ -85,6 +85,7 @@ const Calendar = () => {
     setSelectedDate(dayNumber);
     const clickedDate = new Date(year, month, dayNumber);
     setSelectedDate(clickedDate);
+    setShowTodo(true);
 
     // todoList 배열에서 클릭한 날짜와 일치하는 아이템을 찾음
     const matchingTodo = todoList.find((todo) => {
@@ -93,15 +94,15 @@ const Calendar = () => {
 
     // 일치하는 아이템이 있을 경우 showTodo를 true로 설정
     if (matchingTodo) {
-      setShowTodo(true);
-      setSelectedTodoList(matchingTodo.items);
+      setSelectedTodoList(matchingTodo);
     } else {
-      setShowTodo(false);
+      // setShowTodo(false);
       setSelectedTodoList([]);
     }
   };
 
-  const handleItemClick = (index) => {
+  const handleItemClick = (parendtsId, index) => {
+    console.log(parendtsId);
     if (!diditList.includes(index)) {
       setDiditList([...diditList, index]);
     } else {
@@ -168,15 +169,19 @@ const Calendar = () => {
       </div>
       {showTodo && (
         <div className={styles.todoList}>
-          {selectedTodoList.map((item) => (
-            <span
-              key={item.id}
-              className={`${styles.todoItem} ${diditList.includes(item.id) ? styles.itemSelected : ''}`}
-              onClick={() => handleItemClick(item.id)}
-            >
-              {item}
-            </span>
-          ))}
+          {selectedTodoList.length !== 0 ? (
+            selectedTodoList.items.map((item) => (
+              <span
+                key={item.id}
+                className={`${styles.todoItem} ${diditList.includes(item.id) ? styles.itemSelected : ''}`}
+                onClick={() => handleItemClick(selectedTodoList.id, item.id)}
+              >
+                {item.item}
+              </span>
+            ))
+          ) : (
+            <span className={styles.todoItem}>( no diditos yet )</span>
+          )}
         </div>
       )}
     </div>
