@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 import styles from './Calendar.module.scss';
+import Logo from '../Logo/Logo';
+import TodoModal from '../TodoModal/TodoModal';
 
 const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
@@ -184,6 +186,8 @@ const Calendar = () => {
           )}
         </div>
       )}
+      {/* <TodoModal /> */}
+      <Logo />
     </div>
   );
 };

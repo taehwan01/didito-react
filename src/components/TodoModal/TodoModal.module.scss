@@ -1,0 +1,25 @@
+.todoModalPage {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  display: grid;
+  place-items: center;
+  .todoModal {
+    background-color: white;
+    width: 70%;
+    height: 60%;
+    padding: 1rem;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 20px 1px white;
+    .todoInput {
+      background-color: cadetblue;
+      width: 80%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
