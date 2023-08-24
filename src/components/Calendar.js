@@ -4,11 +4,53 @@ import styles from './Calendar.module.scss';
 
 const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
-const todos = [
-  { id: 1, item: '집에 가자마자 가방 세탁 맡기기', date: '2023-08-15' },
-  { id: 2, item: '가방 세탁 맡기기 집에 가자마자', date: '2023-08-16' },
-  { id: 3, item: '가자마자 집에 가방 세탁 맡기기', date: '2023-08-17' },
-  { id: 4, item: '세탁기 집에 가자마자 돌리기', date: '2023-08-18' },
+// const todoList = [
+//   { id: 1, item: '집에 가자마자 가방 세탁 맡기기', date: '2023-08-15' },
+//   { id: 2, item: '가방 세탁 맡기기 집에 가자마자', date: '2023-08-16' },
+//   { id: 3, item: '가자마자 집에 가방 세탁 맡기기', date: '2023-08-17' },
+//   { id: 4, item: '세탁기 집에 가자마자 돌리기', date: '2023-08-18' },
+// ];
+const todoList = [
+  {
+    id: 1,
+    items: [
+      '1집에 가자마자 가방 세탁 맡기기',
+      '1가방 세탁 맡기기 집에 가자마자',
+      '1가자마자 집에 가방 세탁 맡기기',
+      '1세탁기 집에 가자마자 돌리기',
+    ],
+    date: '2023-08-15',
+  },
+  {
+    id: 2,
+    items: [
+      '2집에 가자마자 가방 세탁 맡기기',
+      '2가방 세탁 맡기기 집에 가자마자',
+      '2가자마자 집에 가방 세탁 맡기기',
+      '2세탁기 집에 가자마자 돌리기',
+    ],
+    date: '2023-08-16',
+  },
+  {
+    id: 3,
+    items: [
+      '3집에 가자마자 가방 세탁 맡기기',
+      '3가방 세탁 맡기기 집에 가자마자',
+      '3가자마자 집에 가방 세탁 맡기기',
+      '3세탁기 집에 가자마자 돌리기',
+    ],
+    date: '2023-08-17',
+  },
+  {
+    id: 4,
+    items: [
+      '4집에 가자마자 가방 세탁 맡기기',
+      '4가방 세탁 맡기기 집에 가자마자',
+      '4가자마자 집에 가방 세탁 맡기기',
+      '4세탁기 집에 가자마자 돌리기',
+    ],
+    date: '2023-08-18',
+  },
 ];
 
 const Calendar = () => {
@@ -18,6 +60,7 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showTodo, setShowTodo] = useState(false);
   const [diditList, setDiditList] = useState([]);
+  const [selectedTodoList, setSelectedTodoList] = useState([]);
 
   const daysCount = daysInMonth(year, month);
   const startDay = new Date(year, month, 1).getDay();
@@ -43,16 +86,18 @@ const Calendar = () => {
     const clickedDate = new Date(year, month, dayNumber);
     setSelectedDate(clickedDate);
 
-    // todos 배열에서 클릭한 날짜와 일치하는 아이템을 찾음
-    const matchingTodo = todos.find((todo) => {
+    // todoList 배열에서 클릭한 날짜와 일치하는 아이템을 찾음
+    const matchingTodo = todoList.find((todo) => {
       return new Date(todo.date).toDateString() === clickedDate.toDateString();
     });
 
     // 일치하는 아이템이 있을 경우 showTodo를 true로 설정
     if (matchingTodo) {
       setShowTodo(true);
+      setSelectedTodoList(matchingTodo.items);
     } else {
       setShowTodo(false);
+      setSelectedTodoList([]);
     }
   };
 
@@ -123,13 +168,13 @@ const Calendar = () => {
       </div>
       {showTodo && (
         <div className={styles.todoList}>
-          {todos.map((todo) => (
+          {selectedTodoList.map((item) => (
             <span
-              key={todo.id}
-              className={`${styles.todoItem} ${diditList.includes(todo.id) ? styles.itemSelected : ''}`}
-              onClick={() => handleItemClick(todo.id)}
+              key={item.id}
+              className={`${styles.todoItem} ${diditList.includes(item.id) ? styles.itemSelected : ''}`}
+              onClick={() => handleItemClick(item.id)}
             >
-              {todo.id + 1}. {todo.item}
+              {item}
             </span>
           ))}
         </div>
